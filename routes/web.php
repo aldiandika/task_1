@@ -39,7 +39,7 @@ $router->post('/api/order', 'OrderProcessController@makeOrder');
 
 
 
-// API to preceed checkout
+// API to proceed checkout
 $router->post('/api/checkout', 'OrderProcessController@checkoutFunction');
 
 // API to get order information

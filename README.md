@@ -1,24 +1,56 @@
-# Lumen PHP Framework
+# Task 1: Online Store
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+This task is part of assessment as Backend Engineer at Evermos.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Prologue
+We are members of the engineering team of an online store. When we look at ratings for our online store application, we received the following facts:
+1. Customers were able to put items in their cart, check out, and then pay. After several days, many of our customers received calls from our Customer Service department stating that their orders have been canceled due to stock unavailability.
+2. These bad reviews generally come within a week after our 12.12 event, in which we held a large flash sale and set up other major discounts to promote our store.
 
-## Official Documentation
+After checking in with our Customer Service and Order Processing departments, we received the following additional facts:
+1. Our inventory quantities are often misreported, and some items even go as far as having a negative inventory quantity.
+2. The misreported items are those that performed very well on our 12.12 event.
+3. Because of these misreported inventory quantities, the Order Processing department was unable to fulfill a lot of orders, and thus requested help from our Customer Service department to call our customers and notify them that we have had to cancel their orders.
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## Problem
+1. Misreported quantities of the items.
+2. Some items even go as far as having a negative inventory quantity.
 
-## Contributing
+## Solution
+1. Create some interface to handle quantities update.
+2. Add flag to separate flow between cart and checkout, to prevent customer to pay item which is not in stock.
+3. Handle stock update ( handle negative value of stock).
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Run this api
 
-## Security Vulnerabilities
+1. Clone this git 
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+    ```
+    https://github.com/aldiandika/task_1.git
+    ```
 
-## License
+2. Install dependency
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    by running `composer install`
+
+3. Setup Environment variable
+
+    ```
+    cp .env.example .env
+    ```
+
+    Generate key
+
+    ```
+    php artisan key:generate
+    ```
+
+    Set database name, user, and password in .env file.
+
+4. Migrate database
+    ```
+    php artisan migrate
+    ```
+
+
+
