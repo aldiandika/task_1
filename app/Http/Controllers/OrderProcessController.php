@@ -65,6 +65,50 @@ class OrderProcessController extends Controller
     }
     // End of Input item to inventory
 
+    // Update item in inventory
+    public function updateItem(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'item_code' => 'required', 
+            'item_name' => 'required',
+            'item_price' => 'required',
+            'item_qty' => 'required',
+        ]);
+
+        if ($validator -> fails()){
+            return response()->json([
+                'success' => false,
+                'message' => 'All column must be filled !!',
+                'data'   => $validator->errors()
+            ],401);
+        }
+        else{
+            $itemCode = $request->input('item_code');
+
+            $inventory = Inventory::where('item_code', $itemCode)
+                        ->update([
+                            'item_code'  => $request->input('item_code'),
+                            'item_name'  => $request->input('item_name'),
+                            'item_price' => $request->input('item_price'),
+                            'item_qty' => $request->input('item_qty'),
+                        ]);
+    
+            if ($inventory) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Item updated !',
+                ], 201);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to update item !',
+                ], 400);
+            }
+        }
+
+    }
+    // End of Update item in inventory
+
 
      // Get all order
      public function getAllOrder(){
@@ -115,19 +159,74 @@ class OrderProcessController extends Controller
             if ($order) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Item saved !',
+                    'message' => 'Order saved !',
                     'data' => $order
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to save item !',
+                    'message' => 'Failed to save order !',
                 ], 400);
             }
         }
 
     }
     // End of Make order
+
+    // Update order
+    public function updateOrder(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'user_code' => 'required', 
+            'user_name' => 'required',
+            'item_code' => 'required',
+            'item_name' => 'required',
+            'item_price' => 'required',
+            'ordered_qty' => 'required',
+            'payment_status' => 'required',
+            'process_flag' => 'required',
+        ]);
+
+        if ($validator -> fails()){
+            return response()->json([
+                'success' => false,
+                'message' => 'All column must be filled !!',
+                'data'   => $validator->errors()
+            ],401);
+        }
+        else{
+            $userCode = $request->input('user_code');
+
+            $order = Order::where('user_code', $userCode)
+                        ->update([
+                            'user_code'  => $request->input('user_code'),
+                            'user_name'  => $request->input('user_name'),
+                            'item_code' => $request->input('item_code'),
+                            'item_name' => $request->input('item_name'),
+                            'item_price' => $request->input('item_price'),
+                            'ordered_qty' => $request->input('ordered_qty'),
+                            'payment_status' => $request->input('payment_status'),
+                            'process_flag' => $request->input('process_flag'),
+                        ]);
+    
+            if ($order) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Order updated !',
+                ], 201);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to update order !',
+                ], 400);
+            }
+        }
+
+    }
+
+    // End of Update order
+
+    
 
     
 }

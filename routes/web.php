@@ -20,26 +20,27 @@ $router->get('/', function () use ($router) {
 // API to get all item in inventory
 $router->get('/api/inventory', 'OrderProcessController@getAllItem');
 
-// API to update item stock in inventory
-// $router->get('/api', 'PostsController@index');
-
-// API to get item in inventory by item id
-// $router->get('/api', 'PostsController@index');
+// API to update item in inventory
+$router->put('/api/inventory', 'OrderProcessController@updateItem');
 
 // API to create item in inventory
 $router->post('/api/inventory', 'OrderProcessController@inputItem');
+
+
 
 // API to get all order
 $router->get('/api/order', 'OrderProcessController@getAllOrder');
 
 // API to update order
-// $router->get('/api', 'PostsController@index');
+$router->put('/api/order', 'OrderProcessController@updateOrder');
 
 // API to input order
 $router->post('/api/order', 'OrderProcessController@makeOrder');
 
+
+
 // API to preceed checkout
-// $router->get('/api', 'PostsController@index');
+// $router->get('/api', 'OrderProcessController@index');
 
 // API to check if order can be proceed
-// $router->get('/api', 'PostsController@index');
+// $router->get('/api', 'OrderProcessController@index');
