@@ -18,17 +18,25 @@ $router->get('/', function () use ($router) {
 });
 
 // API to get all item in inventory
+$router->get('/api/inventory', 'OrderProcessController@getAllItem');
 
 // API to update item stock in inventory
+// $router->get('/posts', 'PostsController@index');
 
 // API to get item in inventory by item id
+// $router->get('/posts', 'PostsController@index');
 
 // API to create item in inventory
+$router->post('/api/inventory', 'OrderProcessController@inputItem');
 
 // API to get all order
+$router->get('/api/order', 'OrderProcessController@getAllOrder');
 
 // API to update order
+// $router->get('/posts', 'PostsController@index');
 
 // API to input order
+// $router->get('/posts', 'PostsController@index');
 
 // API to preceed checkout
+// $router->get('/posts', 'PostsController@index');
