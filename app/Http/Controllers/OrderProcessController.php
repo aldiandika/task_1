@@ -223,8 +223,109 @@ class OrderProcessController extends Controller
         }
 
     }
-
     // End of Update order
+
+
+
+    // Checkout 
+    public function checkoutFunction(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'user_code' => 'required', 
+            'user_name' => 'required',
+            'item_code' => 'required',
+            'item_name' => 'required',
+            'item_price' => 'required',
+            'ordered_qty' => 'required',
+            'payment_status' => 'required',
+            'process_flag' => 'required',
+        ]);
+
+        if ($validator -> fails()){
+            return response()->json([
+                'success' => false,
+                'message' => 'All column must be filled !!',
+                'data'   => $validator->errors()
+            ],401);
+        }
+        else{
+
+            $itemCode = $request->input('item_code');
+            $usrCode =  $request->input('user_code');
+
+            // get item quantity in inventory
+            $getItemQty = Inventory::select('item_qty')
+                        ->where('item_code', $itemCode)
+                        ->get();
+
+            $itemQty = (int)$getItemQty[0]['item_qty'];
+            $ordQty = (int)$request->input('ordered_qty');
+            $lastQty = 0;
+
+            // Check if item is available
+            if ( $ordQty <= $itemQty ){
+                $lastQty = $itemQty - $ordQty;
+
+                if ( $lastQty <= 0){
+                    $lastQty = 0;
+                }
+
+                // Update item quantity in inventory
+                $inventory = Inventory::where('item_code', $itemCode)
+                        ->update([
+                            'item_code'  => $request->input('item_code'),
+                            'item_name'  => $request->input('item_name'),
+                            'item_price' => $request->input('item_price'),
+                            'item_qty' => (string)$lastQty,
+                        ]);
+    
+                if ($inventory) {
+                    // Return flag to proceed to payment
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Item updated !',
+                        'data' => [
+                            'proceed_payment' => true
+                        ]
+                    ], 201);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Failed to update item !',
+                    ], 400);
+                }
+            
+
+            }else{
+
+                // Update process flag in all order
+                $order = Order::where('user_code', '=', $usrCode)
+                        ->update([
+                            'process_flag' => 'false'
+                        ]);
+
+                if ($order) {
+                    // Return flag to proceed to payment
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Sorry, Item is Out of Stock !',
+                        'data' => [
+                            'proceed_payment' => false
+                        ]
+                    ], 201);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Failed to update order !',
+                    ], 400);
+                }
+
+            }
+           
+            
+        }
+
+    }
 
     
 
