@@ -226,7 +226,6 @@ class OrderProcessController extends Controller
     // End of Update order
 
 
-
     // Checkout 
     public function checkoutFunction(Request $request){
 
@@ -283,7 +282,7 @@ class OrderProcessController extends Controller
                     // Return flag to proceed to payment
                     return response()->json([
                         'success' => true,
-                        'message' => 'Item updated !',
+                        'message' => 'Yeay, Checkout success !',
                         'data' => [
                             'proceed_payment' => true
                         ]
@@ -322,12 +321,56 @@ class OrderProcessController extends Controller
 
             }
            
-            
         }
 
     }
+    // End of Checkout
 
+
+    /* Get order info
+    * To give alert wether the item can or can't be proceed to payment
+    * We can determine it with procees_flag parameter
+    */
+    public function getOrderInfo(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_code' => 'required', 
+            'user_name' => 'required',
+            'item_code' => 'required',
+            'item_name' => 'required',
+            'item_price' => 'required',
+            'ordered_qty' => 'required',
+            'payment_status' => 'required',
+            'process_flag' => 'required',
+        ]);
+
+        if ($validator -> fails()){
+            return response()->json([
+                'success' => false,
+                'message' => 'All column must be filled !!',
+                'data'   => $validator->errors()
+            ],401);
+        }
+        else{
+            $userCode = $request->input('user_code');
+            $itemCode = $request->input('item_code');
+
+            $order = Order::where('user_code', $userCode)
+                    ->where('item_code', $itemCode)
+                    ->get();
     
-
+            if ($order) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Order information',
+                    'data' => $order
+                ], 201);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to update order !',
+                ], 400);
+            }
+        }
+    }
     
 }

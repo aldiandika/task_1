@@ -42,5 +42,5 @@ $router->post('/api/order', 'OrderProcessController@makeOrder');
 // API to preceed checkout
 $router->post('/api/checkout', 'OrderProcessController@checkoutFunction');
 
-// API to check if order can be proceed
-// $router->get('/api', 'OrderProcessController@index');
+// API to get order information
+$router->post('/api/orderinfo', 'OrderProcessController@getOrderInfo');
