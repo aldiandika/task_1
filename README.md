@@ -61,6 +61,13 @@ After checking in with our Customer Service and Order Processing departments, we
     ```
     php -S localhost:8000 -t public
     ```
+
+7. Run unit testing
+    Test when customer want to checkout but quantity in inventory is 0 then customer cannot proceed checkout.
+
+    ```
+    ./vendor/bin/phpunit --filter=testOutOfStock
+    ```
     
 
 
