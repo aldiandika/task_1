@@ -52,5 +52,16 @@ After checking in with our Customer Service and Order Processing departments, we
     php artisan migrate
     ```
 
+5. Seed database
+    ```
+    php artisan db:seed
+    ```
+
+6. Run server
+    ```
+    php -S localhost:8000 -t public
+    ```
+    
+
 
 
