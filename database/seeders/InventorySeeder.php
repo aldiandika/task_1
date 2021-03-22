@@ -22,7 +22,7 @@ class InventorySeeder extends Seeder
                 'item_code' => 'ABC123',
                 'item_name' => 'Shirt',
                 'item_price' => '200000',
-                'item_qty' => '1',
+                'item_qty' => '0',
             ]
         ]);
     

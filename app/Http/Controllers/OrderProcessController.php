@@ -24,6 +24,13 @@ class OrderProcessController extends Controller
     // End of Get all item
 
     // Input item to inventory
+    /*
+    Example input :
+            "item_code": "ABC123"
+            "item_name": "Shirt"
+            "item_price": "200000"
+            "item_qty": "0"
+    */
     public function inputItem(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -124,6 +131,17 @@ class OrderProcessController extends Controller
     // End of Get all order
 
     // Make order
+    /*
+    Example input :
+        "user_code": "USR001"
+        "user_name": "Andika"
+        "item_code": "ABC123"
+        "item_name": "Shirt"
+        "item_price": "200000"
+        "ordered_qty": "1"
+        "payment_status": "unpaid"
+        "process_flag": "true"
+    */
     public function makeOrder(Request $request){
 
         $validator = Validator::make($request->all(), [
